@@ -1,15 +1,16 @@
 import { Preloader } from '@ui';
 import { FeedUI } from '@ui-pages';
-import { TOrder } from '@utils-types';
 import { FC } from 'react';
+import { useFeed } from './hooks/useFeed';
 
 export const Feed: FC = () => {
   /** TODO: взять переменную из стора */
-  const orders: TOrder[] = [];
+  const { orders, getFeedHandler } = useFeed();
 
-  if (!orders.length) {
-    return <Preloader />;
+  if (orders && orders.length) {
+    return (
+      <FeedUI orders={orders} handleGetFeeds={getFeedHandler} />
+    );
   }
-
-  <FeedUI orders={orders} handleGetFeeds={() => {}} />;
+  return <Preloader />;
 };
