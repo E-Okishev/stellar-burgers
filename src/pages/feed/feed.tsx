@@ -8,9 +8,7 @@ export const Feed: FC = () => {
   const { orders, getFeedHandler } = useFeed();
 
   if (orders && orders.length) {
-    return (
-      <FeedUI orders={orders} handleGetFeeds={getFeedHandler} />
-    );
+    return <FeedUI orders={orders} handleGetFeeds={getFeedHandler} />;
   }
   return <Preloader />;
 };

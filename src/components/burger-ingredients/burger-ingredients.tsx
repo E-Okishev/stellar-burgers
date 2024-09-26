@@ -8,9 +8,19 @@ import { useAppSelector } from '../../services/store/store';
 export const BurgerIngredients: FC = () => {
   /** TODO: взять переменные из стора */
   const { ingredients } = useAppSelector((state) => state.ingredients);
-  const buns = useMemo(() => ingredients?.filter((ingredient) => ingredient.type === 'bun') || [], [ingredients]);
-  const mains = useMemo(() => ingredients?.filter((ingredient) => ingredient.type === 'main') || [], [ingredients]);
-  const sauces = useMemo(() => ingredients?.filter((ingredient) => ingredient.type === 'sauce') || [], [ingredients]);
+  const buns = useMemo(
+    () => ingredients?.filter((ingredient) => ingredient.type === 'bun') || [],
+    [ingredients]
+  );
+  const mains = useMemo(
+    () => ingredients?.filter((ingredient) => ingredient.type === 'main') || [],
+    [ingredients]
+  );
+  const sauces = useMemo(
+    () =>
+      ingredients?.filter((ingredient) => ingredient.type === 'sauce') || [],
+    [ingredients]
+  );
 
   const [currentTab, setCurrentTab] = useState<TTabMode>('bun');
   const titleBunRef = useRef<HTMLHeadingElement>(null);

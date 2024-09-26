@@ -28,5 +28,6 @@ const ingredientsSlice = createSlice({
   }
 });
 
-export const { getIngredients, setIngredientsIsLoaded, resetIngredients } = ingredientsSlice.actions;
+export const { getIngredients, setIngredientsIsLoaded, resetIngredients } =
+  ingredientsSlice.actions;
 export default ingredientsSlice;

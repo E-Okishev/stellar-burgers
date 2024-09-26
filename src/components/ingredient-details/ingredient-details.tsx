@@ -6,17 +6,16 @@ import { useIngredients } from '../../services/hooks/useIngredients';
 
 type ingredientDetailsProps = {
   id: string;
-}
+};
 
 export const IngredientDetails: FC<ingredientDetailsProps> = ({ id }) => {
   /** TODO: взять переменную из стора */
-  const { ingredients } = useAppSelector(state => state.ingredients);
+  const { ingredients } = useAppSelector((state) => state.ingredients);
   useIngredients();
-  const ingredientData = useMemo(() => {
-    return ingredients.find((ingredient) => {
-      return ingredient._id === id;
-    });
-  }, [ingredients]);
+  const ingredientData = useMemo(
+    () => ingredients.find((ingredient) => ingredient._id === id),
+    [ingredients]
+  );
 
   if (!ingredientData) {
     return <Preloader />;

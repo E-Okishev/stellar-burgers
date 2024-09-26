@@ -6,7 +6,9 @@ export const DetailIngredient = () => {
   const navigate = useNavigate();
   if (id) {
     return (
-      <Modal title={`Детали ингредиента`} onClose={() => navigate('/')}><IngredientDetails id={id} /></Modal>
+      <Modal title={`Детали ингредиента`} onClose={() => navigate('/')}>
+        <IngredientDetails id={id} />
+      </Modal>
     );
   }
   return null;

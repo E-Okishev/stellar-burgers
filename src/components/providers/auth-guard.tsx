@@ -5,19 +5,14 @@ import { getCookie } from '../../utils/cookie';
 
 export const AuthGuard: FC<PropsWithChildren> = ({ children }) => {
   const navigation = useNavigate();
-  const { isAuthenticated } = useAppSelector((state) => {
-    return state.auth;
-  });
+  const { isAuthenticated } = useAppSelector((state) => state.auth);
 
+  console.log(isAuthenticated, getCookie('accessToken'));
   useEffect(() => {
     if (!isAuthenticated && !getCookie('accessToken')) {
       navigation('/register');
     }
   }, [isAuthenticated]);
 
-  return (
-    <>
-      {children}
-    </>
-  );
+  return <>{children}</>;
 };

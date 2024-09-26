@@ -6,7 +6,7 @@ type customLinkProps = {
   icon: React.ReactNode;
   link: string;
   text: string;
-}
+};
 
 export const CustomLink: FC<customLinkProps> = ({ icon, link, text }) => {
   const { pathname } = useLocation();

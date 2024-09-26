@@ -5,7 +5,7 @@ import { registerUserApi } from '@api';
 import { setCookie } from '../../utils/cookie';
 import { useAppDispatch, useAppSelector } from '../../services/store/store';
 import { setAuth, setUser } from '../../services/store/slices/auth-slice';
-import { Navigate, useNavigate } from 'react-router-dom';
+import { Navigate } from 'react-router-dom';
 
 export const Register: FC = () => {
   const dispatch = useAppDispatch();
@@ -24,7 +24,11 @@ export const Register: FC = () => {
     e.preventDefault();
 
     try {
-      const responce = await registerUserApi({ email, name: userName, password });
+      const responce = await registerUserApi({
+        email,
+        name: userName,
+        password
+      });
       setCookie('accessToken', responce.accessToken);
       localStorage.setItem('refreshToken', responce.refreshToken);
       dispatch(setAuth(true));
@@ -37,7 +41,7 @@ export const Register: FC = () => {
   if (!isAuthenticated) {
     return (
       <RegisterUI
-        errorText=""
+        errorText=''
         email={email}
         userName={userName}
         password={password}
@@ -50,7 +54,5 @@ export const Register: FC = () => {
     );
   }
 
-  return (
-    <Navigate to={'/'} />
-  );
+  return <Navigate to={'/'} />;
 };

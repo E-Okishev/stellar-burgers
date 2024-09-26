@@ -22,7 +22,6 @@ export const OrderInfo: FC = () => {
     }
   };
 
-
   useEffect(() => {
     getOrderData();
   }, []);

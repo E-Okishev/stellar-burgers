@@ -1,7 +1,7 @@
 import { FC, memo } from 'react';
 
 import { OrdersListProps } from './type';
-import { OrdersListUI } from '@ui';
+import { OrdersListUI, Preloader } from '@ui';
 import { useIngredients } from '../../services/hooks/useIngredients';
 
 export const OrdersList: FC<OrdersListProps> = memo(({ orders }) => {

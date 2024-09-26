@@ -30,7 +30,7 @@ export const Login: FC = () => {
   if (!isAuthenticated) {
     return (
       <LoginUI
-        errorText=""
+        errorText=''
         email={email}
         setEmail={setEmail}
         password={password}
@@ -40,7 +40,5 @@ export const Login: FC = () => {
     );
   }
 
-  return (
-    <Navigate to={'/'} />
-  );
+  return <Navigate to={'/'} />;
 };

@@ -9,7 +9,9 @@ import { useIngredients } from '../../services/hooks/useIngredients';
 
 export const ConstructorPage: FC = () => {
   /** TODO: взять переменную из стора */
-  const { isLoading: isIngredientsLoading } = useAppSelector((state) => state.ingredients);
+  const { isLoading: isIngredientsLoading } = useAppSelector(
+    (state) => state.ingredients
+  );
   useIngredients();
   return (
     <>

@@ -1,12 +1,16 @@
-import { TConstructorIngredient } from '@utils-types';
+import { TConstructorIngredient, TOrder } from '@utils-types';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 interface IOrder {
   ingredients: TConstructorIngredient[];
+  orderRequest: boolean;
+  orderModalData: TOrder | null;
 }
 
 const initialState: IOrder = {
-  ingredients: []
+  ingredients: [],
+  orderRequest: false,
+  orderModalData: null
 };
 
 const ordersSlice = createSlice({
@@ -20,12 +24,28 @@ const ordersSlice = createSlice({
       state.ingredients = action.payload;
     },
     deleteIngredients(state, action: PayloadAction<string>) {
-      state.ingredients = state.ingredients.filter((ingredient) => {
-        return ingredient.id !== action.payload;
-      });
+      state.ingredients = state.ingredients.filter(
+        (ingredient) => ingredient.id !== action.payload
+      );
+    },
+    setOrderRequest(state, action: PayloadAction<boolean>) {
+      state.orderRequest = action.payload;
+    },
+    setOrderModalData(state, action: PayloadAction<TOrder>) {
+      state.orderModalData = action.payload;
+    },
+    clearOrderModalData(state) {
+      state.orderModalData = null;
     }
   }
 });
 
-export const { setIngredients, setIngredient, deleteIngredients } = ordersSlice.actions;
+export const {
+  setIngredients,
+  setIngredient,
+  deleteIngredients,
+  setOrderRequest,
+  setOrderModalData,
+  clearOrderModalData
+} = ordersSlice.actions;
 export default ordersSlice;
