@@ -1,8 +1,7 @@
 import { ProfileUI } from '@ui-pages';
 import { FC, SyntheticEvent, useEffect, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../../services/store/store';
-import { updateUserApi } from '@api';
-import { setUser } from '../../services/store/slices/auth-slice';
+import { updateUser } from '../../services/store/actions/auth-actions';
 
 export const Profile: FC = () => {
   /** TODO: взять переменную из стора */
@@ -29,16 +28,13 @@ export const Profile: FC = () => {
 
   const handleSubmit = async (e: SyntheticEvent) => {
     e.preventDefault();
-    try {
-      const responce = await updateUserApi({
+    dispatch(
+      updateUser({
         name: formValue.name,
         email: formValue.email,
         password: formValue.password
-      });
-      dispatch(setUser(responce.user));
-    } catch (error) {
-      console.log(error);
-    }
+      })
+    );
   };
 
   const handleCancel = (e: SyntheticEvent) => {

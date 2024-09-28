@@ -8,5 +8,4 @@ export type BurgerConstructorUIProps = {
   onOrderClick: () => void;
   closeOrderModal: () => void;
   ingredients?: TIngredient[];
-  isAuthenticated: boolean;
 };

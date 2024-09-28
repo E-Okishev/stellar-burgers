@@ -1,15 +1,15 @@
 import { FC, SyntheticEvent, useState } from 'react';
 import { RegisterUI } from '@ui-pages';
 import { TRegisterError } from '@utils-types';
-import { registerUserApi } from '@api';
-import { setCookie } from '../../utils/cookie';
 import { useAppDispatch, useAppSelector } from '../../services/store/store';
-import { setAuth, setUser } from '../../services/store/slices/auth-slice';
 import { Navigate } from 'react-router-dom';
+import { fetchRegister } from '../../services/store/actions/auth-actions';
 
 export const Register: FC = () => {
   const dispatch = useAppDispatch();
-  const { isAuthenticated } = useAppSelector((state) => state.auth);
+  const { isAuthenticated, shouldRedirect, redirectLink } = useAppSelector(
+    (state) => state.auth
+  );
 
   const [userName, setUserName] = useState('');
   const [email, setEmail] = useState('');
@@ -23,19 +23,13 @@ export const Register: FC = () => {
   const handleSubmit = async (e: SyntheticEvent) => {
     e.preventDefault();
 
-    try {
-      const responce = await registerUserApi({
+    await dispatch(
+      fetchRegister({
         email,
         name: userName,
         password
-      });
-      setCookie('accessToken', responce.accessToken);
-      localStorage.setItem('refreshToken', responce.refreshToken);
-      dispatch(setAuth(true));
-      dispatch(setUser(responce.user));
-    } catch (error) {
-      console.log(error);
-    }
+      })
+    );
   };
 
   if (!isAuthenticated) {
@@ -54,5 +48,5 @@ export const Register: FC = () => {
     );
   }
 
-  return <Navigate to={'/'} />;
+  return <Navigate to={shouldRedirect ? redirectLink : '/'} />;
 };

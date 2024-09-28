@@ -1,14 +1,14 @@
 import { FC, SyntheticEvent, useState } from 'react';
 import { LoginUI } from '@ui-pages';
-import { loginUserApi, registerUserApi } from '@api';
-import { setCookie } from '../../utils/cookie';
-import { setAuth, setUser } from '../../services/store/slices/auth-slice';
 import { useAppDispatch, useAppSelector } from '../../services/store/store';
-import { Navigate, useNavigate } from 'react-router-dom';
+import { Navigate } from 'react-router-dom';
+import { fetchLogin } from '../../services/store/actions/auth-actions';
 
 export const Login: FC = () => {
   const dispatch = useAppDispatch();
-  const { isAuthenticated } = useAppSelector((state) => state.auth);
+  const { isAuthenticated, shouldRedirect, redirectLink } = useAppSelector(
+    (state) => state.auth
+  );
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -16,15 +16,7 @@ export const Login: FC = () => {
   const handleSubmit = async (e: SyntheticEvent) => {
     e.preventDefault();
 
-    try {
-      const responce = await loginUserApi({ email, password });
-      setCookie('accessToken', responce.accessToken);
-      localStorage.setItem('refreshToken', responce.refreshToken);
-      dispatch(setAuth(true));
-      dispatch(setUser(responce.user));
-    } catch (error) {
-      console.log(error);
-    }
+    dispatch(fetchLogin({ email, password }));
   };
 
   if (!isAuthenticated) {
@@ -40,5 +32,5 @@ export const Login: FC = () => {
     );
   }
 
-  return <Navigate to={'/'} />;
+  return <Navigate to={shouldRedirect ? redirectLink : '/'} />;
 };

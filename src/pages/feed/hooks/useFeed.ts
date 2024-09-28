@@ -1,7 +1,6 @@
 import { useAppDispatch, useAppSelector } from '../../../services/store/store';
 import { useEffect } from 'react';
-import { getFeedsApi } from '@api';
-import { getFeed } from '../../../services/store/slices/feed-slice';
+import { fetchFeed } from '../../../services/store/actions/feed-actions';
 
 export const useFeed = () => {
   const dispatch = useAppDispatch();
@@ -9,7 +8,7 @@ export const useFeed = () => {
   const { orders } = useAppSelector((store) => store.feed);
 
   const getFeedHandler = () => {
-    getFeedsApi().then((response) => dispatch(getFeed(response)));
+    dispatch(fetchFeed());
   };
   useEffect(() => {
     getFeedHandler();

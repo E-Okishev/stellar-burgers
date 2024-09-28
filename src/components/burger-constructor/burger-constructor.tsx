@@ -1,15 +1,18 @@
 import { FC, useMemo } from 'react';
 import { BurgerConstructorUI } from '@ui';
 import { useAppDispatch, useAppSelector } from '../../services/store/store';
-import { orderBurgerApi } from '@api';
+import { clearOrderModalData } from '../../services/store/slices/order-slice';
+import { addOrder } from '../../services/store/actions/order-actions';
+import { useNavigate } from 'react-router-dom';
 import {
-  clearOrderModalData,
-  setOrderModalData,
-  setOrderRequest
-} from '../../services/store/slices/order-slice';
+  setRedirectLink,
+  setShouldRedirect
+} from '../../services/store/slices/auth-slice';
 
 export const BurgerConstructor: FC = () => {
   /** TODO: взять переменные constructorItems, orderRequest и orderModalData из стора */
+  const navigate = useNavigate();
+
   const { ingredients, orderRequest, orderModalData } = useAppSelector(
     (state) => state.orders
   );
@@ -36,23 +39,16 @@ export const BurgerConstructor: FC = () => {
   const onOrderClick = async () => {
     if (!constructorItems.bun || orderRequest) return;
 
-    try {
-      dispatch(setOrderRequest(true));
-      const sortIngrediens = ingredients.map((ingredient) => ingredient._id);
-      const response = await orderBurgerApi([
-        ...sortIngrediens,
-        sortIngrediens[0]
-      ]);
-
-      if (response?.order) {
-        dispatch(setOrderModalData(response.order));
-      }
-    } catch (e) {
-      console.log(e);
-    } finally {
-      dispatch(setOrderRequest(false));
+    if (!!!isAuthenticated) {
+      dispatch(setRedirectLink('/'));
+      dispatch(setShouldRedirect(true));
+      navigate('/register');
     }
+
+    const sortIngrediens = ingredients.map((ingredient) => ingredient._id);
+    dispatch(addOrder([...sortIngrediens, sortIngrediens[0]]));
   };
+
   const closeOrderModal = () => {
     dispatch(clearOrderModalData());
   };
@@ -66,7 +62,6 @@ export const BurgerConstructor: FC = () => {
   }, [constructorItems]);
   return (
     <BurgerConstructorUI
-      isAuthenticated={isAuthenticated}
       price={price}
       orderRequest={orderRequest}
       constructorItems={constructorItems}

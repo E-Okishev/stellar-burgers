@@ -1,5 +1,6 @@
 import { TIngredient, TOrder } from '@utils-types';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { fetchFeed } from '../actions/feed-actions';
 
 interface IFeed {
   orders?: TOrder[];
@@ -24,6 +25,16 @@ const feedSlice = createSlice({
       state.total = action.payload.total;
       state.totalToday = action.payload.totalToday;
     }
+  },
+  extraReducers: (builder) => {
+    builder.addCase(
+      fetchFeed.fulfilled,
+      (state, action: PayloadAction<IFeed>) => {
+        state.orders = action.payload.orders;
+        state.total = action.payload.total;
+        state.totalToday = action.payload.totalToday;
+      }
+    );
   }
 });
 

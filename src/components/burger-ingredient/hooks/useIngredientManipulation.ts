@@ -1,17 +1,19 @@
 import { TIngredient } from '@utils-types';
-import { useDispatch } from 'react-redux';
 import {
   setIngredients,
   setIngredient
 } from '../../../services/store/slices/order-slice';
-import { useAppSelector } from '../../../services/store/store';
+import { useAppDispatch, useAppSelector } from '../../../services/store/store';
+import { v4 as uuidv4 } from 'uuid';
 
 export const useIngredientManiplation = (ingredient: TIngredient) => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const { ingredients } = useAppSelector((state) => state.orders);
 
+  const id = uuidv4();
+
   const handleAdd = () => {
-    const bunIngredientId = ingredients.findIndex(
+    const bunIngredient = ingredients.find(
       (ingredient) => ingredient.type === 'bun'
     );
 
@@ -21,15 +23,13 @@ export const useIngredientManiplation = (ingredient: TIngredient) => {
       );
       dispatch(
         setIngredients([
-          { id: '' + bunIngredientId, ...ingredient },
+          { id: '' + bunIngredient?.id, ...ingredient },
           ...filtredIngredients
         ])
       );
       return;
     }
-    dispatch(
-      setIngredient({ id: JSON.stringify(ingredients.length), ...ingredient })
-    );
+    dispatch(setIngredient({ id: id, ...ingredient }));
   };
 
   return { handleAdd, ingredients };

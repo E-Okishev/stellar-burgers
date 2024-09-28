@@ -6,14 +6,15 @@ import {
   setIngredientsIsLoaded,
   resetIngredients
 } from '../store/slices/ingredients-slice';
+import { fetchIngredients } from '../store/actions/ingredients-actions';
 
 export const useIngredients = () => {
   const dispatch = useAppDispatch();
 
   const getIngredientsHandler = () => {
-    dispatch(setIngredientsIsLoaded());
-    getIngredientsApi().then((response) => dispatch(getIngredients(response)));
+    dispatch(fetchIngredients());
   };
+
   useEffect(() => {
     getIngredientsHandler();
     return () => {

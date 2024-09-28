@@ -1,5 +1,6 @@
 import { TIngredient } from '@utils-types';
 import { Action, createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { fetchIngredients } from '../actions/ingredients-actions';
 
 interface IIngredients {
   ingredients: TIngredient[];
@@ -25,6 +26,18 @@ const ingredientsSlice = createSlice({
     resetIngredients: (state) => {
       state.ingredients = [];
     }
+  },
+  extraReducers: (builder) => {
+    builder.addCase(fetchIngredients.pending, (state) => {
+      state.isLoading = true;
+    });
+    builder.addCase(
+      fetchIngredients.fulfilled,
+      (state, action: PayloadAction<TIngredient[]>) => {
+        state.isLoading = false;
+        state.ingredients = action.payload;
+      }
+    );
   }
 });
 

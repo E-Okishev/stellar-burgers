@@ -1,18 +1,17 @@
 import { useEffect } from 'react';
 import { useAppDispatch } from '../store/store';
-import { getOrdersApi } from '@api';
 import {
   clearProfileOrders,
-  setOrderFetchLoadings,
-  setProfileOrders
+  setOrderFetchLoadings
 } from '../store/slices/orders-slice';
+import { fetchOrders } from '../store/actions/orders-actions';
 
 export const useProfileOrders = () => {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
     dispatch(setOrderFetchLoadings());
-    getOrdersApi().then((res) => dispatch(setProfileOrders(res)));
+    dispatch(fetchOrders());
 
     return () => {
       dispatch(clearProfileOrders());

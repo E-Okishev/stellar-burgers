@@ -1,5 +1,7 @@
 import { TConstructorIngredient, TOrder } from '@utils-types';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { addOrder } from '../actions/order-actions';
+import { TNewOrderResponse } from '@api';
 
 interface IOrder {
   ingredients: TConstructorIngredient[];
@@ -37,6 +39,18 @@ const ordersSlice = createSlice({
     clearOrderModalData(state) {
       state.orderModalData = null;
     }
+  },
+  extraReducers: (builder) => {
+    builder.addCase(
+      addOrder.fulfilled,
+      (state, action: PayloadAction<TNewOrderResponse>) => {
+        state.orderModalData = action.payload.order;
+        state.orderRequest = false;
+      }
+    );
+    builder.addCase(addOrder.pending, (state) => {
+      state.orderRequest = true;
+    });
   }
 });
 
