@@ -42,7 +42,7 @@ export const BurgerConstructor: FC = () => {
     if (!!!isAuthenticated) {
       dispatch(setRedirectLink('/'));
       dispatch(setShouldRedirect(true));
-      navigate('/register');
+      navigate('/login');
     }
 
     const sortIngrediens = ingredients.map((ingredient) => ingredient._id);
