@@ -43,6 +43,7 @@ export const BurgerConstructor: FC = () => {
       dispatch(setRedirectLink('/'));
       dispatch(setShouldRedirect(true));
       navigate('/login');
+      return;
     }
 
     const sortIngrediens = ingredients.map((ingredient) => ingredient._id);
