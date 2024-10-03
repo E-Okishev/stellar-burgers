@@ -1,7 +1,10 @@
 import { FC, useMemo } from 'react';
 import { BurgerConstructorUI } from '@ui';
 import { useAppDispatch, useAppSelector } from '../../services/store/store';
-import { clearOrderModalData } from '../../services/store/slices/order-slice';
+import {
+  clearIngredients,
+  clearOrderModalData
+} from '../../services/store/slices/order-slice';
 import { addOrder } from '../../services/store/actions/order-actions';
 import { useNavigate } from 'react-router-dom';
 import {
@@ -48,6 +51,7 @@ export const BurgerConstructor: FC = () => {
 
     const sortIngrediens = ingredients.map((ingredient) => ingredient._id);
     dispatch(addOrder([...sortIngrediens, sortIngrediens[0]]));
+    dispatch(clearIngredients());
   };
 
   const closeOrderModal = () => {

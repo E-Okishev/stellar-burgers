@@ -7,7 +7,7 @@ interface IProfileOrders {
   isLoading: boolean;
 }
 
-const initialState: IProfileOrders = {
+export const initialState: IProfileOrders = {
   orders: [],
   isLoading: false
 };
