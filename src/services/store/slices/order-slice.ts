@@ -9,7 +9,7 @@ interface IOrder {
   orderModalData: TOrder | null;
 }
 
-const initialState: IOrder = {
+export const initialState: IOrder = {
   ingredients: [],
   orderRequest: false,
   orderModalData: null

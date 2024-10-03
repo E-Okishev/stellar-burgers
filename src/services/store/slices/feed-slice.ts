@@ -10,10 +10,10 @@ interface IFeed {
 }
 
 export const initialState: IFeed = {
-  orders: undefined,
+  orders: [],
   total: 0,
   totalToday: 0,
-  ingredients: undefined
+  ingredients: []
 };
 
 const feedSlice = createSlice({
@@ -24,6 +24,7 @@ const feedSlice = createSlice({
       state.orders = action.payload.orders;
       state.total = action.payload.total;
       state.totalToday = action.payload.totalToday;
+      state.ingredients = action.payload.ingredients;
     }
   },
   extraReducers: (builder) => {
@@ -33,6 +34,7 @@ const feedSlice = createSlice({
         state.orders = action.payload.orders;
         state.total = action.payload.total;
         state.totalToday = action.payload.totalToday;
+        state.ingredients = action.payload.ingredients;
       }
     );
   }

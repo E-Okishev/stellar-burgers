@@ -17,7 +17,7 @@ interface IAuthState {
   redirectLink: string;
 }
 
-const initialState: IAuthState = {
+export const initialState: IAuthState = {
   user: {} as TUser,
   isAuthenticated: false,
   shouldRedirect: false,

@@ -7,7 +7,7 @@ interface IIngredients {
   isLoading: boolean;
 }
 
-const initialState: IIngredients = {
+export const initialState: IIngredients = {
   ingredients: [],
   isLoading: false
 };
