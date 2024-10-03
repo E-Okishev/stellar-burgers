@@ -1,12 +1,13 @@
 describe('BurgerConstructor', () => {
+  const bunSelector = '[data-cy=bun-ingredients]';
+  const mainsSelector = '[data-cy=mains-ingredients]';
+  const saucesSelector = '[data-cy=sauces-ingredients]';
+  const modalSelector = '[id=modals]';
+  
   beforeEach(() => {
     cy.intercept('GET', 'api/ingredients', { fixture: 'ingredients.json' });
-    cy.intercept('POST', 'api/orders', { fixture: 'order.json' }).as(
-      'makeOrder'
-    );
-    cy.intercept('GET', 'api/auth/user', { fixture: 'user.json' }).as(
-      'getUser'
-    );
+    cy.intercept('POST', 'api/orders', { fixture: 'order.json' }).as('makeOrder');
+    cy.intercept('GET', 'api/auth/user', { fixture: 'user.json' }).as('getUser');
     cy.setCookie('accessToken', 'testToken');
     localStorage.setItem('refreshToken', 'testRefreshToken');
     cy.visit('/');
@@ -21,7 +22,7 @@ describe('BurgerConstructor', () => {
   describe('Add ingredients to constructor', () => {
     it('add buns to constructor', () => {
       cy.contains('Выберите булки').should('exist');
-      cy.get('[data-cy=bun-ingredients]').contains('Добавить').click();
+      cy.get(bunSelector).contains('Добавить').as('bunAddButton').click();
       cy.get('.constructor-element_pos_top')
         .contains('Краторная булка N-200i')
         .should('exist');
@@ -29,31 +30,31 @@ describe('BurgerConstructor', () => {
 
     it('add main ingredients to constructor', () => {
       cy.contains('Выберите начинку').should('exist');
-      cy.get('[data-cy=mains-ingredients]').contains('Добавить').click();
+      cy.get(mainsSelector).contains('Добавить').as('mainsAddButton').click();
       cy.get('.constructor-element')
         .contains('Биокотлета из марсианской Магнолии')
         .should('exist');
     });
 
-    it('add sause ingredients to constructor', () => {
+    it('add sauce ingredients to constructor', () => {
       cy.contains('Выберите начинку').should('exist');
-      cy.get('[data-cy=sauces-ingredients]').contains('Добавить').click();
+      cy.get(saucesSelector).contains('Добавить').as('sauceAddButton').click();
       cy.get('.constructor-element').contains('Соус Spicy-X').should('exist');
     });
   });
 
   describe('ingredients modal', () => {
     it('open and close ingredients modal', () => {
-      cy.get('[data-cy=bun-ingredients] li').first().click();
-      cy.get('[id=modals]')
+      cy.get(bunSelector).find('li').first().click();
+      cy.get(modalSelector)
         .contains('Краторная булка N-200i')
         .should('be.visible');
-      cy.get('[id=modals]').find('button').click().should('not.exist');
+      cy.get(modalSelector).find('button').click().should('not.exist');
     });
 
     it('close by overlay', () => {
-      cy.get('[data-cy=bun-ingredients] li').first().click();
-      cy.get('[id=modals]')
+      cy.get(bunSelector).find('li').first().click();
+      cy.get(modalSelector)
         .find('div')
         .click({ multiple: true, force: true })
         .should('not.exist');
@@ -66,17 +67,17 @@ describe('BurgerConstructor', () => {
     });
 
     it('should be successfully creation', () => {
-      cy.get('[data-cy=bun-ingredients]').contains('Добавить').click();
-      cy.get('[data-cy=mains-ingredients]').contains('Добавить').click();
-      cy.get('[data-cy=sauces-ingredients]').contains('Добавить').click();
+      cy.get(bunSelector).contains('Добавить').click();
+      cy.get(mainsSelector).contains('Добавить').click();
+      cy.get(saucesSelector).contains('Добавить').click();
       cy.get('[type=button]').contains('Оформить заказ').click();
 
       cy.wait('@makeOrder', { timeout: 1000 })
         .its('response.statusCode')
         .should('eq', 200);
 
-      cy.get('[id=modals]').contains('555').should('be.visible');
-      cy.get('[id=modals]').find('button').click().should('not.exist');
+      cy.get(modalSelector).contains('555').should('be.visible');
+      cy.get(modalSelector).find('button').click().should('not.exist');
 
       cy.get('[id=root]')
         .should('contain', 'Выберите булки')
