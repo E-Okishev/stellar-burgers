@@ -7,7 +7,6 @@ export const AuthGuard: FC<PropsWithChildren> = ({ children }) => {
   const navigation = useNavigate();
   const { isAuthenticated } = useAppSelector((state) => state.auth);
 
-  console.log(isAuthenticated, getCookie('accessToken'));
   useEffect(() => {
     if (!isAuthenticated && !getCookie('accessToken')) {
       navigation('/register');

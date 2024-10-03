@@ -9,7 +9,7 @@ interface IFeed {
   ingredients?: TIngredient[];
 }
 
-const initialState: IFeed = {
+export const initialState: IFeed = {
   orders: undefined,
   total: 0,
   totalToday: 0,

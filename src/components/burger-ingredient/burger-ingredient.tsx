@@ -8,7 +8,6 @@ import { useIngredientManiplation } from './hooks/useIngredientManipulation';
 export const BurgerIngredient: FC<TBurgerIngredientProps> = memo(
   ({ ingredient }) => {
     const location = useLocation();
-
     const { handleAdd, ingredients } = useIngredientManiplation(ingredient);
 
     const count = useMemo(() => {

@@ -22,6 +22,9 @@ const ordersSlice = createSlice({
     setIngredient(state, action: PayloadAction<TConstructorIngredient>) {
       state.ingredients = [...state.ingredients, action.payload];
     },
+    clearIngredients(state) {
+      state.ingredients = [];
+    },
     setIngredients(state, action: PayloadAction<TConstructorIngredient[]>) {
       state.ingredients = action.payload;
     },
@@ -60,6 +63,7 @@ export const {
   deleteIngredients,
   setOrderRequest,
   setOrderModalData,
-  clearOrderModalData
+  clearOrderModalData,
+  clearIngredients
 } = ordersSlice.actions;
 export default ordersSlice;
