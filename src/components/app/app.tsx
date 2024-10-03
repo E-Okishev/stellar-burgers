@@ -1,13 +1,14 @@
-import { ConstructorPage } from '@pages';
 import '../../index.css';
 import styles from './app.module.css';
 
-import { AppHeader } from '@components';
+import { AppRouterProvider } from '../providers/app-router-provider';
+import { ReduxProvider } from '../providers/redux-provider';
 
 const App = () => (
   <div className={styles.app}>
-    <AppHeader />
-    <ConstructorPage />
+    <ReduxProvider>
+      <AppRouterProvider />
+    </ReduxProvider>
   </div>
 );
 

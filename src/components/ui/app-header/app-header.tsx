@@ -7,28 +7,36 @@ import {
   Logo,
   ProfileIcon
 } from '@zlden/react-developer-burger-ui-components';
+import { CustomLink } from '../../custom-link';
 
 export const AppHeaderUI: FC<TAppHeaderUIProps> = ({ userName }) => (
   <header className={styles.header}>
     <nav className={`${styles.menu} p-4`}>
       <div className={styles.menu_part_left}>
         <>
-          <BurgerIcon type={'primary'} />
-          <p className='text text_type_main-default ml-2 mr-10'>Конструктор</p>
+          <CustomLink
+            icon={<BurgerIcon type={'primary'} />}
+            link={'/'}
+            text={'Конструктор'}
+          />
         </>
         <>
-          <ListIcon type={'primary'} />
-          <p className='text text_type_main-default ml-2'>Лента заказов</p>
+          <CustomLink
+            icon={<ListIcon type={'primary'} />}
+            link={'/feed'}
+            text={'Лента заказов'}
+          />
         </>
       </div>
       <div className={styles.logo}>
         <Logo className='' />
       </div>
       <div className={styles.link_position_last}>
-        <ProfileIcon type={'primary'} />
-        <p className='text text_type_main-default ml-2'>
-          {userName || 'Личный кабинет'}
-        </p>
+        <CustomLink
+          icon={<ProfileIcon type={'primary'} />}
+          link={'/profile'}
+          text={userName || 'Личный кабинет'}
+        />
       </div>
     </nav>
   </header>

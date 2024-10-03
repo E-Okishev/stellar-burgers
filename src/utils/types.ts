@@ -37,4 +37,10 @@ export type TUser = {
   name: string;
 };
 
+export type TRegisterError = {
+  userName: boolean;
+  email: boolean;
+  password: boolean;
+};
+
 export type TTabMode = 'bun' | 'sauce' | 'main';

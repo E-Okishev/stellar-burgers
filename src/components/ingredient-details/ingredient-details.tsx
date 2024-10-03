@@ -1,10 +1,21 @@
-import { FC } from 'react';
+import { FC, useMemo, useState } from 'react';
 import { Preloader } from '../ui/preloader';
 import { IngredientDetailsUI } from '../ui/ingredient-details';
+import { useAppSelector } from '../../services/store/store';
+import { useIngredients } from '../../services/hooks/useIngredients';
 
-export const IngredientDetails: FC = () => {
+type ingredientDetailsProps = {
+  id: string;
+};
+
+export const IngredientDetails: FC<ingredientDetailsProps> = ({ id }) => {
   /** TODO: взять переменную из стора */
-  const ingredientData = null;
+  const { ingredients } = useAppSelector((state) => state.ingredients);
+  useIngredients();
+  const ingredientData = useMemo(
+    () => ingredients.find((ingredient) => ingredient._id === id),
+    [ingredients]
+  );
 
   if (!ingredientData) {
     return <Preloader />;

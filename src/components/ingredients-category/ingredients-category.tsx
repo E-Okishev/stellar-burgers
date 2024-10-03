@@ -12,7 +12,7 @@ export const IngredientsCategory = forwardRef<
     bun: {
       _id: ''
     },
-    ingredients: []
+    ingredients
   };
 
   const ingredientsCounters = useMemo(() => {

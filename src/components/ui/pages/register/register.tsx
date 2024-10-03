@@ -16,7 +16,8 @@ export const RegisterUI: FC<RegisterUIProps> = ({
   password,
   setPassword,
   userName,
-  setUserName
+  setUserName,
+  error
 }) => (
   <main className={styles.container}>
     <div className={`pt-6 ${styles.wrapCenter}`}>
@@ -34,7 +35,7 @@ export const RegisterUI: FC<RegisterUIProps> = ({
               onChange={(e) => setUserName(e.target.value)}
               value={userName}
               name='name'
-              error={false}
+              error={error.userName}
               errorText=''
               size='default'
             />
@@ -46,7 +47,7 @@ export const RegisterUI: FC<RegisterUIProps> = ({
               onChange={(e) => setEmail(e.target.value)}
               value={email}
               name={'email'}
-              error={false}
+              error={error.email}
               errorText=''
               size={'default'}
             />
